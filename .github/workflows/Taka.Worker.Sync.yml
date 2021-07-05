@@ -1,20 +1,18 @@
-name: Docker Image CI
+name: Taka.Worker.Sync CI
 
 on:
   push:
-    branches: [ master ]
-  paths:
+    branches: [master]
+    paths:
       - Workers/Taka.Worker.Sync/**
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . --file Workers/Taka.Worker.Sync/Dockerfile --tag my-image-name:$(date +%s)
+      - uses: actions/checkout@v2
+      - name: Build the Docker image
+        run: docker build . --file Workers/Taka.Worker.Sync/Dockerfile --tag my-image-name:$(date +%s)
