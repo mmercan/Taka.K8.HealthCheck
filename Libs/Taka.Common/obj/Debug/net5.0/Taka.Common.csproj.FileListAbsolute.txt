@@ -1,0 +1,12 @@
+C:\repos\Taka.K8.HealthCheck\Libs\Taka.Common\bin\Debug\net5.0\Taka.Common.deps.json
+C:\repos\Taka.K8.HealthCheck\Libs\Taka.Common\bin\Debug\net5.0\Taka.Common.dll
+C:\repos\Taka.K8.HealthCheck\Libs\Taka.Common\bin\Debug\net5.0\ref\Taka.Common.dll
+C:\repos\Taka.K8.HealthCheck\Libs\Taka.Common\bin\Debug\net5.0\Taka.Common.pdb
+C:\repos\Taka.K8.HealthCheck\Libs\Taka.Common\obj\Debug\net5.0\Taka.Common.csproj.AssemblyReference.cache
+C:\repos\Taka.K8.HealthCheck\Libs\Taka.Common\obj\Debug\net5.0\Taka.Common.GeneratedMSBuildEditorConfig.editorconfig
+C:\repos\Taka.K8.HealthCheck\Libs\Taka.Common\obj\Debug\net5.0\Taka.Common.AssemblyInfoInputs.cache
+C:\repos\Taka.K8.HealthCheck\Libs\Taka.Common\obj\Debug\net5.0\Taka.Common.AssemblyInfo.cs
+C:\repos\Taka.K8.HealthCheck\Libs\Taka.Common\obj\Debug\net5.0\Taka.Common.csproj.CoreCompileInputs.cache
+C:\repos\Taka.K8.HealthCheck\Libs\Taka.Common\obj\Debug\net5.0\Taka.Common.dll
+C:\repos\Taka.K8.HealthCheck\Libs\Taka.Common\obj\Debug\net5.0\ref\Taka.Common.dll
+C:\repos\Taka.K8.HealthCheck\Libs\Taka.Common\obj\Debug\net5.0\Taka.Common.pdb
