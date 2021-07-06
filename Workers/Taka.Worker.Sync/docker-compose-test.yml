@@ -6,7 +6,7 @@ services:
     build:
       target: test
       context: ../../
-      dockerfile: Workers/Turquoise.Worker.Comms/Dockerfile-test
+      dockerfile: Workers/Taka.Worker.Sync/Dockerfile-test
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - DOTNET_USE_POLLING_FILE_WATCHER=1
