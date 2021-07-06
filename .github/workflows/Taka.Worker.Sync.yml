@@ -74,3 +74,16 @@ jobs:
         with:
           name: helm
           path: Helm
+  deploy_to_dev:
+    runs-on: ubuntu-latest
+    env:
+      ARTIFACT_PATH: ${{ github.workspace }}
+      IMAGE_NAME: ${{ github.repository }}
+    steps:
+      - name: Download a single artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: helm
+      - name: helm version
+        run: |
+          helm version \
