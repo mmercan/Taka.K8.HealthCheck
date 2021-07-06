@@ -21,7 +21,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      Artifact_PATH: "${{ github.workspace }}\\${{ env.buildConfiguration }}\\Artifact"
+      ARTIFACT_PATH: ${{ github.workspace }}
       IMAGE_NAME: ${{ github.repository }}
     steps:
       - name: Checkout repository
@@ -42,7 +42,7 @@ jobs:
           --build-arg buildtime_SONARKEY=${{ secrets.buildtime_SONARKEY }} \
 
       - name: Run the Test image
-        run: docker run -i -v $(Build.ArtifactStagingDirectory):/TestResults taka-worker-sync-test
+        run: docker run -i -v ${{env.ARTIFACT_PATH}}:/TestResults taka-worker-sync-test
 
       - name: Build the Docker image
         run: docker build . --file Workers/Taka.Worker.Sync/Dockerfile --tag my-image-name:$(date +%s)
