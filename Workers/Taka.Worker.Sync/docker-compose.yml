@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   taka-worker-sync:
-    image: mmercan/taka-worker-sync:${TAGVersion}-prod-linux
+    image: mmercan/taka-worker-sync
     build:
       target: final
       context: ../../
