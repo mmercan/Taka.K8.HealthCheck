@@ -59,6 +59,10 @@ jobs:
         run: |
           docker push mmercan/taka-worker-sync --all-tags \
 
+      - name: List all folders
+        run: |
+          ls -R \
+
       - name: Archive code coverage results
         uses: actions/upload-artifact@v2
         with:
