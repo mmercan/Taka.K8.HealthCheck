@@ -17,6 +17,11 @@ on:
       tags:
         description: "Test scenario tags"
 
+env:
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: ${{ github.repository }}
+  Artifact_PATH: ${{ github.workspace }}\${{ env.buildConfiguration }}\Artifact
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -31,7 +36,7 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-      - name: Build Docker Compose file
+      - name: Build Test Docker Compose file
         run: |
           docker-compose --file Workers/Taka.Worker.Sync/docker-compose-test.yml build \
           --build-arg buildtime_APPID=${{ secrets.buildtime_APPID }} \
@@ -39,8 +44,19 @@ jobs:
           --build-arg buildtime_ADID=${{ secrets.buildtime_ADID }}$() \
           --build-arg buildtime_SONARKEY=${{ secrets.buildtime_SONARKEY }} \
 
-      - name: Tag the Image
-        run: docker tag taka-worker-sync-test:latest imagename:${{ github.run_id }}
+      - name: Run the Test image
+        run: docker run -i -v $(Build.ArtifactStagingDirectory):/TestResults taka-worker-sync-test
 
       - name: Build the Docker image
         run: docker build . --file Workers/Taka.Worker.Sync/Dockerfile --tag my-image-name:$(date +%s)
+
+      - name: Build Docker Compose file
+        run: |
+          docker-compose --file Workers/Taka.Worker.Sync/docker-compose.yml build \
+
+      - name: Tag the Image
+        run: docker tag taka-worker-sync-prod-linux:latest taka-worker-sync-prod-linux:${{ github.run_id }}
+
+      - name: Push Docker Images
+        run: |
+          docker push taka-worker-sync-prod-linux --all-tags \
