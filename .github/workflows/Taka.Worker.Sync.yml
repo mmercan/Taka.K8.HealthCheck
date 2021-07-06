@@ -30,6 +30,11 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          
+          
+      - name: Build Docker Compose file
+        run: docker-compose build --file Workers/Taka.Worker.Sync/docker-compose-test.yml
+          
         
       - name: Build the Docker image
         run: docker build . --file Workers/Taka.Worker.Sync/Dockerfile --tag my-image-name:$(date +%s)
