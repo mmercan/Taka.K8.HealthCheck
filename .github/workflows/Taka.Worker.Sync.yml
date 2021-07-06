@@ -52,7 +52,7 @@ jobs:
           docker-compose --file Workers/Taka.Worker.Sync/docker-compose.yml build \
 
       - name: Tag the Image
-        run: docker tag taka-worker-sync-prod-linux:latest taka-worker-sync-prod-linux:${{ github.run_id }}
+        run: docker tag mmercan/taka-worker-sync:01-prod-linux:latest mmercan/taka-worker-sync:01-prod-linux:${{ github.run_id }}
 
       - name: Push Docker Images
         run: |
