@@ -39,5 +39,8 @@ jobs:
           --build-arg buildtime_ADID=${{ secrets.buildtime_ADID }}$() \
           --build-arg buildtime_SONARKEY=${{ secrets.buildtime_SONARKEY }} \
 
+      - name: Tag the Image
+        run: docker tag taka-worker-sync-test:latest imagename:${{ github.run_id }}
+
       - name: Build the Docker image
         run: docker build . --file Workers/Taka.Worker.Sync/Dockerfile --tag my-image-name:$(date +%s)
