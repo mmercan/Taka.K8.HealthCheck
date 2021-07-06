@@ -85,6 +85,18 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: helm
+
       - name: helm version
         run: |
           helm version \
+
+      - name: Kubernetes set context
+        uses: Azure/k8s-set-context@v1.1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBECONFIG }}
+          context: matt-test-aks2
+
+      - name: helm version
+        run: |
+          kubectl get namespaces \
