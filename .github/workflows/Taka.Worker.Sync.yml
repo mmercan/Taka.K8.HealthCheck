@@ -17,15 +17,12 @@ on:
       tags:
         description: "Test scenario tags"
 
-env:
-  # github.repository as <account>/<repo>
-  IMAGE_NAME: ${{ github.repository }}
-  Artifact_PATH: ${{ github.workspace }}\${{ env.buildConfiguration }}\Artifact
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    env:
+      Artifact_PATH: "${{ github.workspace }}\\${{ env.buildConfiguration }}\\Artifact"
+      IMAGE_NAME: ${{ github.repository }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
