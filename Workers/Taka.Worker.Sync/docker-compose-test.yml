@@ -1,8 +1,8 @@
 version: "3.4"
 
 services:
-  turquoise-comms:
-    image: turquoise-comms-test
+  taka-worker-sync:
+    image: taka-worker-sync-test
     build:
       target: test
       context: ../../
