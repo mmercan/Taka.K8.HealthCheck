@@ -92,7 +92,7 @@ jobs:
 
       - name: helm version
         run: |
-          helm version \
+          helm version
           echo ${{ env.WorkflowRunURL }}
 
       - name: Kubernetes set context
