@@ -84,6 +84,12 @@ jobs:
       ARTIFACT_PATH: ${{ github.workspace }}
       IMAGE_NAME: ${{ github.repository }}
       WorkflowRunURL: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
+      EventName: $GITHUB_EVENT_NAME
+      TriggerActor: $GITHUB_ACTOR
+      GitCommit: $GITHUB_SHA
+      GitRef: $GITHUB_REF
+      GitPullReqRef: $GITHUB_HEAD_REF
+
     steps:
       - name: Download a single artifact
         uses: actions/download-artifact@v2
@@ -94,6 +100,11 @@ jobs:
         run: |
           helm version
           echo ${{ env.WorkflowRunURL }}
+          echo ${{ env.EventName }}
+          echo ${{ env.TriggerActor }}
+          echo ${{ env.GitCommit }}
+          echo ${{ env.GitRef }}
+          echo ${{ env.GitPullReqRef }}
 
       - name: Kubernetes set context
         uses: Azure/k8s-set-context@v1.1
