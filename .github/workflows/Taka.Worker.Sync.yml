@@ -59,10 +59,6 @@ jobs:
         run: |
           docker push mmercan/taka-worker-sync --all-tags \
 
-      - name: List all folders
-        run: |
-          ls -R \
-
       - name: Archive code coverage results
         uses: actions/upload-artifact@v2
         with:
@@ -113,12 +109,16 @@ jobs:
           kubeconfig: ${{ secrets.KUBECONFIG }}
           context: matt-test-aks2
 
+      - name: List all folders
+        run: |
+          ls -R \
+
       - name: helm package
         run: |
           helm package \
           --version 2.0.0-$GITHUB_RUN_ID \
           --destination $GITHUB_WORKSPACE/package \
-          $GITHUB_WORKSPACE/Helm/Taka/charts/Taka.Worker.Sync \
+          $GITHUB_WORKSPACE/helm/Helm/Taka/charts/Taka.Worker.Sync \
 
       - name: helm version
         run: |
