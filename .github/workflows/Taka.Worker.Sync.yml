@@ -120,6 +120,12 @@ jobs:
           --destination $GITHUB_WORKSPACE/package \
           $GITHUB_WORKSPACE/Taka/charts/Taka.Worker.Sync \
 
+      - name: helm template
+        run: |
+          helm template \
+          $GITHUB_WORKSPACE/Taka/charts/Taka.Worker.Sync \
+          -f $GITHUB_WORKSPACE/values/Taka.Worker.Sync/dev-values.yaml \
+
       - name: helm version
         run: |
           kubectl get namespaces \
