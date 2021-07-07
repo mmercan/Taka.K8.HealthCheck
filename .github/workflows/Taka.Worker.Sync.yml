@@ -102,7 +102,7 @@ jobs:
           echo ${{ env.WorkflowRunURL }}
           echo ${{ env.EventName }}
           echo ${{ env.TriggerActor }}
-          echo ${{ env.GitCommit }}
+          echo ${{ env.GitCommitURL }}
           echo ${{ env.GitRef }}
           echo ${{ env.GitPullReqRef }}
 
