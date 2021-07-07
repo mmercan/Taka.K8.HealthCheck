@@ -113,6 +113,13 @@ jobs:
           kubeconfig: ${{ secrets.KUBECONFIG }}
           context: matt-test-aks2
 
+      - name: helm package
+        run: |
+          helm package \
+          --version 2.0.0-$GITHUB_RUN_ID \
+          --destination $GITHUB_WORKSPACE/package \
+          $GITHUB_WORKSPACE/Helm/Taka/charts/Taka.Worker.Sync \
+
       - name: helm version
         run: |
           kubectl get namespaces \
