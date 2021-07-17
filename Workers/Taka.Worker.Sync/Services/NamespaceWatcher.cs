@@ -25,30 +25,32 @@ namespace Taka.Worker.Sync.Services
             while (!cancellationToken.IsCancellationRequested)
             {
                 await ExecuteOnceAsync(cancellationToken);
-                await Task.Delay(TimeSpan.FromMinutes(1), cancellationToken);
+                // await Task.Delay(TimeSpan.FromMinutes(1), cancellationToken);
             }
         }
 
         private Task ExecuteOnceAsync(CancellationToken cancellationToken)
         {
+            return Task.Run(() =>
+             {
+                 //var podlistResp = _client.ListNamespacedPodWithHttpMessagesAsync("default", watch: true);
+                 var nslistResp = _client.ListNamespaceWithHttpMessagesAsync(watch: true);
+                 using (nslistResp.Watch<V1Namespace, V1NamespaceList>((type, item) =>
+                 {
+                     _logger.LogCritical(DateTime.Now + " ==on watch event==");
+                     _logger.LogCritical(type.ToString());
+                     _logger.LogCritical(item.Metadata.Name);
+                     _logger.LogCritical(DateTime.Now + " ==on watch event==");
+                 }))
+                 {
+                     _logger.LogCritical("press ctrl + c to stop watching");
 
-            //var podlistResp = _client.ListNamespacedPodWithHttpMessagesAsync("default", watch: true);
-            var nslistResp = _client.ListNamespaceWithHttpMessagesAsync(watch: true);
-            using (nslistResp.Watch<V1Namespace, V1NamespaceList>((type, item) =>
-            {
-                _logger.LogCritical(DateTime.Now + " ==on watch event==");
-                _logger.LogCritical(type.ToString());
-                _logger.LogCritical(item.Metadata.Name);
-                _logger.LogCritical(DateTime.Now + " ==on watch event==");
-            }))
-            {
-                _logger.LogCritical("press ctrl + c to stop watching");
-
-                var ctrlc = new ManualResetEventSlim(false);
-                Console.CancelKeyPress += (sender, eventArgs) => ctrlc.Set();
-                ctrlc.Wait();
-                return Task.FromResult("");
-            }
+                     var ctrlc = new ManualResetEventSlim(false);
+                     Console.CancelKeyPress += (sender, eventArgs) => ctrlc.Set();
+                     ctrlc.Wait();
+                     // return Task.FromResult("");
+                 }
+             });
         }
     }
 }
