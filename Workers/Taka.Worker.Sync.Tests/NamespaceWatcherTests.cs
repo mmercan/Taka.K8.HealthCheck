@@ -16,16 +16,16 @@ namespace Taka.Worker.Sync.Tests
         [Fact]
         public async Task TestExecutebyNewInstanceAsync()
         {
-            NamespaceWatcher job = new NamespaceWatcher(GetKubernetesClient(), CreateLogger());
-            var jobExecutionContext = new Mock<IJobExecutionContext>();
-            // jobExecutionContext.Setup(p => p.Result()).Returns(new )
-            // jobExecutionContext.Setup(p => p.Charge()).Returns(true)
-            // await job.Execute(jobExecutionContext.Object);
+            // NamespaceWatcher job = new NamespaceWatcher(GetKubernetesClient(), CreateLogger());
+            // var jobExecutionContext = new Mock<IJobExecutionContext>();
+            // // jobExecutionContext.Setup(p => p.Result()).Returns(new )
+            // // jobExecutionContext.Setup(p => p.Charge()).Returns(true)
+            // // await job.Execute(jobExecutionContext.Object);
 
-            CancellationTokenSource source = new CancellationTokenSource();
-            CancellationToken token = source.Token;
+            // CancellationTokenSource source = new CancellationTokenSource();
+            // CancellationToken token = source.Token;
 
-            await job.StartAsync(token);
+            // await job.StartAsync(token);
         }
 
 
