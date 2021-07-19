@@ -42,8 +42,7 @@ jobs:
 
       - name: add KUBECONFIG To env file
         run: |
-          echo KUBECONFIG=${{ env.KUBECONFIG }} >> Workers/Taka.Worker.Sync/.env
-          cat Workers/Taka.Worker.Sync/.env
+          cp ${{ env.KUBECONFIG }} /home/runner/work/_temp/config
 
       - name: View Docker Compose config
         run: |
