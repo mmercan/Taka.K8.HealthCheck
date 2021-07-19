@@ -33,6 +33,13 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
+      - name: Kubernetes set context
+        uses: Azure/k8s-set-context@v1.1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBECONFIG }}
+          context: matt-test-aks2
+
       - name: Build Test Docker Compose file
         run: |
           docker-compose --file Workers/Taka.Worker.Sync/docker-compose-test.yml build \
