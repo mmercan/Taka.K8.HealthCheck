@@ -42,7 +42,7 @@ jobs:
 
       - name: add KUBECONFIG To env file
         run: |
-          cp ${{ env.KUBECONFIG }} kube/config
+          cp ${{ env.KUBECONFIG }} /home/runner/work/_temp/config
           ls -R
           cat kube/config
 

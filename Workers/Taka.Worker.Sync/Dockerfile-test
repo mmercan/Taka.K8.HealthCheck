@@ -21,7 +21,7 @@ ENV SONAR_HOST=https://sonarcloud.io
 
 WORKDIR /src
 
-RUN test -d kube/config && echo 'It Exists'
+RUN ls / -R
 RUN cat kube/config
 
 RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
