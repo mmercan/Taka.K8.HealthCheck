@@ -31,4 +31,6 @@ RUN dotnet build ./Workers/Taka.Worker.Sync/Taka.Worker.Sync.sln
 # RUN dotnet build-server shutdown
 # RUN dotnet sonarscanner end /d:sonar.login=$SONARKEY
 
-ENTRYPOINT ["./Workers/Taka.Worker.Sync/commands.sh"]
+RUN ["chmod", "+x", "./Workers/Taka.Worker.Sync/docker-entrypoint.sh"]
+
+ENTRYPOINT ["./Workers/Taka.Worker.Sync/docker-entrypoint.sh"]
