@@ -43,6 +43,7 @@ jobs:
       - name: add KUBECONFIG To env file
         run: |
           cp ${{ env.KUBECONFIG }} kube/config
+          ls -R
 
       - name: View Docker Compose config
         run: |
