@@ -45,9 +45,13 @@ jobs:
           echo KUBECONFIG=${{ env.KUBECONFIG }} >> Workers/Taka.Worker.Sync/.env
           cat Workers/Taka.Worker.Sync/.env
 
+      - name: View Docker Compose config
+        run: |
+          docker-compose --file Workers/Taka.Worker.Sync/docker-compose-test.yml --log-level DEBUG config
+
       - name: Build Test Docker Compose file
         run: |
-          docker-compose --file Workers/Taka.Worker.Sync/docker-compose-test.yml build \
+          docker-compose --file Workers/Taka.Worker.Sync/docker-compose-test.yml --log-level DEBUG build \
           --build-arg buildtime_APPID=${{ secrets.buildtime_APPID }} \
           --build-arg buildtime_APPSECRET=${{ secrets.buildtime_APPSECRET }} \
           --build-arg buildtime_ADID=${{ secrets.buildtime_ADID }}$() \
