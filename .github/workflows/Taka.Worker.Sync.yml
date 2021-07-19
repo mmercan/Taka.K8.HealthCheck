@@ -40,9 +40,10 @@ jobs:
           kubeconfig: ${{ secrets.KUBECONFIG }}
           context: matt-test-aks2
 
-      - name: Build Docker Compose file
+      - name: add KUBECONFIG To env file
         run: |
-          echo KUBECONFIG=${{ env.KUBECONFIG }} > Workers/Taka.Worker.Sync/.env
+          echo KUBECONFIG=${{ env.KUBECONFIG }} > Workers/Taka.Worker.Sync/.env \
+          cat Workers/Taka.Worker.Sync/.env
 
       - name: Build Test Docker Compose file
         run: |
