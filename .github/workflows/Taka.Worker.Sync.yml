@@ -42,7 +42,7 @@ jobs:
 
       - name: add KUBECONFIG To env file
         run: |
-          echo KUBECONFIG=${{ env.KUBECONFIG }} > Workers/Taka.Worker.Sync/.env \
+          echo KUBECONFIG=${{ env.KUBECONFIG }} >> Workers/Taka.Worker.Sync/.env
           cat Workers/Taka.Worker.Sync/.env
 
       - name: Build Test Docker Compose file
