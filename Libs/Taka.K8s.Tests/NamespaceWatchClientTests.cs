@@ -31,7 +31,14 @@ namespace Taka.K8s.Tests
             };
 
             var taskwatch = watchClient.StartAsync();
-            taskwatch.Wait();
+
+            var timeout1min = 60 * 1000;
+
+            _output.WriteLine("watch times out in one minute");
+            taskwatch.Wait(timeout1min);
+
+
+
             // var waittask = System.Threading.Tasks.Task.Delay(TimeSpan.FromMinutes(1));
             // waittask.Wait();
             //When
