@@ -5,6 +5,7 @@ on:
     branches: [master]
     paths:
       - Workers/Taka.Worker.Sync/**
+      - Workers/Taka.Worker.Sync.Tests/**
   pull_request:
     branches: [master]
 
