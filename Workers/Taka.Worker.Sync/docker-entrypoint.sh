@@ -6,6 +6,11 @@ dotnet build ./Workers/Taka.Worker.Sync/Taka.Worker.Sync.sln
 # dotnet test ./Workers/Taka.Worker.Sync/Taka.Worker.Sync.sln   /p:CollectCoverage=true /p:CoverletOutput=/TestResults/ /p:MergeWith=/TestResults/coverage.json --logger=trx -r /TestResults/
 # dotnet test ./Empty.Tests/Empty.Tests.sln /p:CollectCoverage=true /p:MergeWith="/TestResults/coverage.json" /p:CoverletOutputFormat="opencover" /p:CoverletOutput=/TestResults/
 
+echo "Console output"
+dotnet watch test ./Workers/Taka.Worker.Sync/Taka.Worker.Sync.sln --logger:"console;verbosity=detailed" /p:CollectCoverage=true
+
+
+echo "trx output"
 dotnet test ./Workers/Taka.Worker.Sync/Taka.Worker.Sync.sln  /p:CollectCoverage=true /p:Exclude="[xunit.*.*]*" /p:CoverletOutput=/TestResults/ /p:MergeWith=/TestResults/coverage.json --logger=trx -r /TestResults/
 dotnet test ./Empty.Tests/Empty.Tests.sln /p:CollectCoverage=true /p:MergeWith="/TestResults/coverage.json" /p:CoverletOutputFormat="opencover" /p:CoverletOutput=/TestResults/ 
 
