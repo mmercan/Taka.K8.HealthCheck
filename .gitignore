@@ -386,6 +386,7 @@ FodyWeavers.xsd
 # JetBrains Rider
 .idea/
 *.sln.iml
-Libs/Taka.K8s.Tests/coverage.json
 **/coverage.json
 
+docker-compose-debug-linux_secrets.yml
+secrets.sh
