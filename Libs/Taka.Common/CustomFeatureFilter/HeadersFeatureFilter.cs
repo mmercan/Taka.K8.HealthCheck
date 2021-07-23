@@ -14,6 +14,7 @@ namespace Taka.Common.CustomFeatureFilter
         // Used to access HttpContext
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ILogger<HeadersFeatureFilter> _logger;
+        private string claimType = "";
         public HeadersFeatureFilter(IHttpContextAccessor httpContextAccessor, ILogger<HeadersFeatureFilter> logger)
         {
             _httpContextAccessor = httpContextAccessor;
@@ -32,16 +33,15 @@ namespace Taka.Common.CustomFeatureFilter
                 // Retrieve the current user (ClaimsPrincipal)
                 var user = _httpContextAccessor.HttpContext.User;
 
-
-
                 var headerKeys = _httpContextAccessor.HttpContext.Request.Headers.Keys.ToList();
-
 
                 // Only enable the feature if the user has ALL the required claims
                 var isEnabled = settings.RequiredHeaders
                     .All(header => headerKeys.Contains(header));
-                //user.HasClaim(claim => claim.Type == claimType));
-                _logger.LogDebug("isEnabled : " + isEnabled.ToString() + " " + headerKeys.FirstOrDefault());
+
+                var hasclaim = user.HasClaim(claim => claim.Type == claimType);
+
+                _logger.LogDebug(user?.Identity?.Name + " isEnabled : " + isEnabled.ToString() + " " + headerKeys.FirstOrDefault());
 
                 return isEnabled;
             });

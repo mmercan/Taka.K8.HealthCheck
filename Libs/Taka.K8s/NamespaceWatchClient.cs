@@ -4,16 +4,33 @@ using AutoMapper;
 using k8s;
 using k8s.Models;
 using Microsoft.Extensions.Logging;
+using Taka.Models;
 
 namespace Taka.K8s
 {
+
+    public class TakaNamespaceEventArgs : EventArgs
+    {
+        public TakaNamespaceEventArgs(TakaNamespace takaNamespace, WatchEventType eventType)
+        {
+
+        }
+    }
+
+
     public class NamespaceWatchClient
     {
-        private Kubernetes _client;
-        private ILogger<NamespaceClient> _logger;
-        private IMapper _mapper;
+        private readonly Kubernetes _client;
+        private readonly ILogger<NamespaceClient> _logger;
+        private readonly IMapper _mapper;
 
-        public event EventHandler WatchTriggered;
+        //  public delegate void TakaNamespaceEventHandler(object sender, TakaNamespaceEventArgs args);
+        // public event TakaNamespaceEventHandler WatchTriggered;
+
+        public event EventHandler<TakaNamespaceEventArgs> WatchTriggered;
+        public event EventHandler<TakaNamespaceEventArgs> TakaNamespaceAdded;
+        public event EventHandler<TakaNamespaceEventArgs> TakaNamespaceRemoved;
+        public event EventHandler<TakaNamespaceEventArgs> TakaNamespaceUpdated;
 
         public NamespaceWatchClient(Kubernetes client, ILogger<NamespaceClient> logger, IMapper mapper)
         {
@@ -24,7 +41,6 @@ namespace Taka.K8s
 
         public async Task StartAsync()
         {
-            // var podlistResp = _client.ListNamespacedPodWithHttpMessagesAsync("default", watch: true);
             var namespaceWatch = await _client.ListNamespaceWithHttpMessagesAsync(watch: true);
             using (namespaceWatch.Watch<V1Namespace, V1NamespaceList>((type, item) =>
             {
@@ -33,21 +49,58 @@ namespace Taka.K8s
                 _logger.LogCritical(type.ToString());
                 _logger.LogCritical(item.Metadata.Name);
                 _logger.LogCritical("==on watch event==");
-                OnWatchTriggered(new EventArgs());
+                var mappeditem = _mapper.Map<TakaNamespace>(item);
+                OnWatchTriggered(new TakaNamespaceEventArgs(mappeditem, type));
+                switch (type)
+                {
+
+                    case WatchEventType.Added:
+                        {
+                            OnTakaNamespaceAdded(new TakaNamespaceEventArgs(mappeditem, type));
+                            break;
+                        }
+                    case WatchEventType.Deleted:
+                        {
+                            OnTakaNamespaceRemoved(new TakaNamespaceEventArgs(mappeditem, type));
+                            break;
+                        }
+                    case WatchEventType.Modified:
+                        {
+                            OnTakaNamespaceUpdated(new TakaNamespaceEventArgs(mappeditem, type));
+                            break;
+                        }
+
+                    default: break;
+                }
             }))
             {
                 _logger.LogCritical("Watch stopped");
-
             }
-
         }
 
 
-        protected virtual void OnWatchTriggered(EventArgs e)
+        protected virtual void OnWatchTriggered(TakaNamespaceEventArgs e)
         {
-            EventHandler handler = WatchTriggered;
+            EventHandler<TakaNamespaceEventArgs> handler = WatchTriggered;
             handler?.Invoke(this, e);
         }
 
+        protected virtual void OnTakaNamespaceAdded(TakaNamespaceEventArgs e)
+        {
+            EventHandler<TakaNamespaceEventArgs> handler = TakaNamespaceAdded;
+            handler?.Invoke(this, e);
+        }
+
+        protected virtual void OnTakaNamespaceRemoved(TakaNamespaceEventArgs e)
+        {
+            EventHandler<TakaNamespaceEventArgs> handler = TakaNamespaceRemoved;
+            handler?.Invoke(this, e);
+        }
+
+        protected virtual void OnTakaNamespaceUpdated(TakaNamespaceEventArgs e)
+        {
+            EventHandler<TakaNamespaceEventArgs> handler = TakaNamespaceUpdated;
+            handler?.Invoke(this, e);
+        }
     }
 }

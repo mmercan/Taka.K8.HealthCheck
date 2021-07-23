@@ -20,19 +20,19 @@ namespace Taka.K8s
             var realHandler = client.HttpMessageHandlers.FirstOrDefault(h => !(h is DelegatingHandler));
             if (!(realHandler is HttpClientHandler))
             {
-                throw new Exception("Expected HttpClientHandler");
+                throw new ArgumentException("Expected HttpClientHandler");
             }
 
             var underlyingHandlerProperty = realHandler.GetType().GetField("_underlyingHandler", BindingFlags.NonPublic | BindingFlags.Instance);
             if (underlyingHandlerProperty == null)
             {
-                throw new Exception("Expected _underlyingHandler property not found.");
+                throw new NullReferenceException("Expected _underlyingHandler property not found.");
             }
 
             var underlyingHandler = underlyingHandlerProperty.GetValue(realHandler);
             if (underlyingHandler == null)
             {
-                throw new Exception("_underlyingHandler is null.");
+                throw new NullReferenceException("_underlyingHandler is null.");
             }
 
             if (underlyingHandler is SocketsHttpHandler socketHandler)
@@ -42,7 +42,7 @@ namespace Taka.K8s
             }
             else
             {
-                throw new Exception($"Expected to find SocketsHttpHandler, but found: {underlyingHandler.GetType().Name}");
+                throw new ArgumentException($"Expected to find SocketsHttpHandler, but found: {underlyingHandler.GetType().Name}");
             }
         }
     }

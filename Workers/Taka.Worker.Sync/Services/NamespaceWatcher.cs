@@ -20,12 +20,11 @@ namespace Taka.Worker.Sync.Services
             _logger = logger;
         }
 
-        protected override async Task ExecuteAsync(CancellationToken cancellationToken)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (!cancellationToken.IsCancellationRequested)
+            while (!stoppingToken.IsCancellationRequested)
             {
-                await ExecuteOnceAsync(cancellationToken);
-                // await Task.Delay(TimeSpan.FromMinutes(1), cancellationToken);
+                await ExecuteOnceAsync(stoppingToken);
             }
         }
 
@@ -33,7 +32,6 @@ namespace Taka.Worker.Sync.Services
         {
             return Task.Run(() =>
              {
-                 //var podlistResp = _client.ListNamespacedPodWithHttpMessagesAsync("default", watch: true);
                  var nslistResp = _client.ListNamespaceWithHttpMessagesAsync(watch: true);
                  using (nslistResp.Watch<V1Namespace, V1NamespaceList>((type, item) =>
                  {
@@ -48,9 +46,8 @@ namespace Taka.Worker.Sync.Services
                      var ctrlc = new ManualResetEventSlim(false);
                      Console.CancelKeyPress += (sender, eventArgs) => ctrlc.Set();
                      ctrlc.Wait();
-                     // return Task.FromResult("");
                  }
-             });
+             }, cancellationToken);
         }
     }
 }
